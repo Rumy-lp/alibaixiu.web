@@ -59,3 +59,32 @@ $('#btnAdd').on('click', function () {
         }
     })
 });
+
+//给用户列表中的编辑按钮注册点击事件 当点击编辑按钮时 选中的用户信息将展示到左边的添加信息列表中
+$('tbody').on('click', '.edit', function () {
+    //将标头添加用户改为编辑用户
+    $('h2').html('编辑用户');
+    //获取当前被点击的元素的父级元素tr
+    let tr = $(this).parents('tr');
+    let imgSrc = tr.find('img').attr('src');
+    $('#previewImg').attr("src", imgSrc);
+    $('#hidden').val(imgSrc);
+    $('input[name="email"]').prop('disabled', true).val(tr.children().eq(2).text());
+    $('input[name="nickName"]').val(tr.children().eq(3).text());
+    $('input[name="password"]').prop('disabled', true);
+
+    if (tr.children().eq(4).text() == '激活') {
+        $('#status1').prop('checked', true);
+    } else {
+        $('#status0').prop('checked', true);
+    }
+
+    if (tr.children().eq(5).text() == '超级管理员') {
+        $('#admin').prop('checked', true);
+    } else {
+        $('#normal').prop('checked', true);
+    }
+    // 将添加按钮隐藏 同时 将遍历按钮显示出来 
+    $('#btnAdd').hide();
+    $('#btnEdit').show();
+});
