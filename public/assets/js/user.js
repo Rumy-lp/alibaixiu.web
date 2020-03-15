@@ -31,3 +31,31 @@ $('#avatar').on('change', function () {
         }
     })
 });
+
+//添加用户功能
+$('#btnAdd').on('click', function () {
+    // 收集用户输入的数据  将表单里面的数据进行一次性获取到
+    let data = $("form").serialize();
+    $.ajax({
+        type: 'post',
+        url: '/users',
+        data: data,
+        success: function (res) {
+            userArr.push(res);
+            render();
+            // 将表单数据清空 
+            $('input[type="email"]').val('');
+            $('input[name="nickName"]').val('');
+            $('input[name="password"]').val('');
+            $('#status0').prop('checked', false);
+            $('#status1').prop('checked', false);
+            $('#admin').prop('checked', false);
+            $('#normal').prop('checked', false);
+            $('#hidden').val('');
+            $('#previewImg').attr('src', '../assets/img/default.png')
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+});
